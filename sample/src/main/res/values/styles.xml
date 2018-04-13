@@ -12,9 +12,9 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="SplashTheme" parent="AppTheme.Base">
+    <!-- <style name="SplashTheme" parent="AppTheme.Base">
         <item name="android:windowBackground">@drawable/background_splash</item>
-    </style>
+    </style> -->
 
     <style name="ToggleButtonBorderlessTextless">
         <item name="android:textOff">""</item>

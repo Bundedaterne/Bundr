@@ -5,10 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_splash"
     android:orientation="vertical"
     tools:context="nu.dropud.bundr.feature.main.MainActivity">
-
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
