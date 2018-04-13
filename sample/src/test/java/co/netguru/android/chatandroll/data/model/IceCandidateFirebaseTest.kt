@@ -1,4 +1,4 @@
-package co.netguru.android.chatandroll.data.model
+package nu.dropud.bundr.data.model
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

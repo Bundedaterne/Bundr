@@ -8,7 +8,7 @@ android {
     buildToolsVersion versions.buildTools
 
     defaultConfig {
-        applicationId "co.netguru.android.chatandroll"
+        applicationId "nu.dropud.bundr"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
         versionCode globalVersionCode

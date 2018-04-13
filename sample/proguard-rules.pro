@@ -72,8 +72,8 @@
 -keepattributes Signature
 
 # This rule will properly ProGuard all the model classes in
-# the package co.netguru.android.chatandroll.data.model.**
--keepclassmembers class co.netguru.android.chatandroll.data.model.** {
+# the package nu.dropud.bundr.data.model.**
+-keepclassmembers class nu.dropud.bundr.data.model.** {
   *;
 }
 

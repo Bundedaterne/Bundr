@@ -1,4 +1,4 @@
-package co.netguru.android.chatandroll
+package nu.dropud.bundr
 
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins

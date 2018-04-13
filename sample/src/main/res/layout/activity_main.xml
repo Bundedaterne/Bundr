@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_splash"
     android:orientation="vertical"
-    tools:context="co.netguru.android.chatandroll.feature.main.MainActivity">
+    tools:context="nu.dropud.bundr.feature.main.MainActivity">
 
 
     <FrameLayout
