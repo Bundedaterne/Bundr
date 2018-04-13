@@ -15,7 +15,6 @@ import javax.inject.Singleton
 
 @Singleton
 class FirebaseIceCandidates @Inject constructor(private val firebaseDatabase: FirebaseDatabase) {
-
     companion object {
         private const val ICE_CANDIDATES_PATH = "ice_candidates/"
     }
@@ -42,8 +41,6 @@ class FirebaseIceCandidates @Inject constructor(private val firebaseDatabase: Fi
                 val typeIndicator = object : GenericTypeIndicator<MutableMap<String, IceCandidateFirebase>>() {}
                 val currentIceCandidatesInFirebaseMap = mutableData.getValue(typeIndicator) ?:
                         return Transaction.success(mutableData)
-
-
                 for ((key, value) in currentIceCandidatesInFirebaseMap) {
                     if (iceCandidatesToRemoveList.remove(value)) {
                         currentIceCandidatesInFirebaseMap.remove(key)
