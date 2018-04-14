@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion versions.buildTools
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "nu.dropud.bundr"

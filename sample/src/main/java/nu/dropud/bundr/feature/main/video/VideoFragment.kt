@@ -138,6 +138,10 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
             //getPresenter().disconnectByUser()
         }
 
+        returnCross.setOnClickListener {
+            TODO()
+        }
+
         switchCameraButton.setOnClickListener {
             service?.switchCamera()
         }

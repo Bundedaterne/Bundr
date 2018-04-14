@@ -80,6 +80,9 @@
             android:contentDescription="@string/desc_hangup"
             android:src="@drawable/beernotready"/>
 
+
+
+
         <ToggleButton
             android:id="@+id/cameraEnabledToggle"
             style="@style/ToggleButtonBorderlessTextless"
@@ -93,5 +96,12 @@
             android:visibility="invisible"/>
     </LinearLayout>
 
-
+    <ImageButton
+        android:id="@+id/returnCross"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/returncross"
+        android:src="@drawable/krydsbag" />
 </android.support.design.widget.CoordinatorLayout>
