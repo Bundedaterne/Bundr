@@ -78,14 +78,14 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
 
         disconnectButton.setOnClickListener {
-            localReady = !localReady
-            service?.sendReadyState(localReady)
-            checkBothReady()
-            if(localReady) {
-                disconnectButton.setImageResource(R.drawable.beerready)
-            }
-            else {
-                disconnectButton.setImageResource(R.drawable.beernotready)
+            if (service?.sendReadyState(!localReady)!!) {
+                localReady = !localReady
+                checkBothReady()
+                if (localReady) {
+                    disconnectButton.setImageResource(R.drawable.beerready)
+                } else {
+                    disconnectButton.setImageResource(R.drawable.beernotready)
+                }
             }
 
             //val rem = remoteUuid

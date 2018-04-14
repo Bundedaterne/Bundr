@@ -52,7 +52,10 @@ class WebRtcServiceController @Inject constructor(
         webRtcClient.dispose()
     }
 
-    fun sendReadyState(isReady: Boolean) {
+    fun sendReadyState(isReady: Boolean) : Boolean {
+        if (this.remoteUuid == null) {
+            return false
+        }
         disposables += firebaseBundr.sendReady(this.remoteUuid!!, isReady)
                 .compose(RxUtils.applyCompletableIoSchedulers())
                 .subscribeBy(
@@ -63,6 +66,8 @@ class WebRtcServiceController @Inject constructor(
                             Timber.e(it, "Error while sending message")
                         }
                 )
+
+        return true
     }
 
     fun listenForReadyState(callback: (Boolean) -> Unit) {
