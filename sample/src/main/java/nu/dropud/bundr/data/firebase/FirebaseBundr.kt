@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class FirebaseBundr @Inject constructor(private val firebaseDatabase: FirebaseDatabase) {
     companion object {
-        private const val BUNDR_PATH = "bundr/"
+            private const val BUNDR_PATH = "bundr/"
     }
 
     private fun connectionBundrPath(localUuid: String, remoteUuid: String): String {

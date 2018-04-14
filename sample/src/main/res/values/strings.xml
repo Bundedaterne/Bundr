@@ -24,7 +24,7 @@
     <string name="background_work_notification_channel_description">Warns about app working in the background</string>
     <string name="ongoing_call_notification_title">Bundr is running</string>
     <string name="ongoing_call_notification_text">Video chat call is still running in the background</string>
-    <string name="people_waiting_text">\? people waiting to chug</string>
+    <string name="people_waiting_text">\? chuggers are waiting in your area</string>
     <string name="chug_button_text">Find me a chug partner!</string>
 
     <string name="too_fast_m8">oopsie whoopsie! uwu we made a fucky wucky!!1 a wittle fucko boingo! the code monkies at our headquarters are working VEWY HAWD to fix this!</string>

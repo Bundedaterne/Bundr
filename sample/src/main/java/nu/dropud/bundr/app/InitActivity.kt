@@ -5,9 +5,18 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_init.*
 import nu.dropud.bundr.R
+import nu.dropud.bundr.common.extension.ChildEventAdded
+import nu.dropud.bundr.common.extension.ChildEventRemoved
 import nu.dropud.bundr.common.extension.areAllPermissionsGranted
+import nu.dropud.bundr.common.extension.rxChildEvents
 import nu.dropud.bundr.feature.base.BaseActivity
 import nu.dropud.bundr.feature.main.MainActivity
 import nu.dropud.bundr.feature.main.video.VideoFragment
@@ -19,6 +28,9 @@ class InitActivity : AppCompatActivity() {
         private const val CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE = 1
     }
 
+    var availableChugger: Long = 0;
+    var fireReference = FirebaseDatabase.getInstance().getReference("online_devices/")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init)
@@ -29,10 +41,24 @@ class InitActivity : AppCompatActivity() {
 
         val context = applicationContext
 
-        if (! (context.areAllPermissionsGranted(*NECESSARY_PERMISSIONS))) {
+        if (!(context.areAllPermissionsGranted(*NECESSARY_PERMISSIONS))) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO), CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE)
 
         }
+
+        fireReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError?) {
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val childrenCount = dataSnapshot.childrenCount
+                if (childrenCount == 1L) {
+                    textView.text = "" + dataSnapshot.childrenCount + " chugger are waiting in your area"
+                } else {
+                    textView.text = "" +  dataSnapshot.childrenCount + " chuggers are waiting in your area"
+                }
+            }
+        })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) = when (requestCode) {
