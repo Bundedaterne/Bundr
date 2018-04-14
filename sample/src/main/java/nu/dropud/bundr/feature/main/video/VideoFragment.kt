@@ -133,6 +133,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
     }
 
+
     private fun checkBothReady() {
         if(localReady && remoteReady) {
             if(counterStarted) return
@@ -225,9 +226,9 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     }
 
     override fun showCamViews() {
-        /** buttonPanel.visibility = View.VISIBLE
+         buttonPanel.visibility = View.VISIBLE
         remoteVideoView.visibility = View.VISIBLE
-        localVideoView.visibility = View.VISIBLE **/
+        localVideoView.visibility = View.VISIBLE
     }
 
     override fun showStartRouletteView() {
