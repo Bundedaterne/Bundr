@@ -24,6 +24,9 @@ import nu.dropud.bundr.webrtc.service.WebRtcServiceListener
 import kotlinx.android.synthetic.main.fragment_video.*
 import org.webrtc.PeerConnection
 import timber.log.Timber
+import android.os.CountDownTimer
+
+
 
 
 class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>(), VideoFragmentView, WebRtcServiceListener {
@@ -75,10 +78,16 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
 
         disconnectButton.setOnClickListener {
-            disconnectButton.setImageResource(R.drawable.beerready)
             localReady = !localReady
             service?.sendReadyState(localReady)
             checkBothReady()
+            if(localReady) {
+                disconnectButton.setImageResource(R.drawable.beerready)
+            }
+            else {
+                disconnectButton.setImageResource(R.drawable.beernotready)
+            }
+
             //val rem = remoteUuid
             //getPresenter().disconnectByUser()
         }
@@ -99,6 +108,22 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     private fun checkBothReady() {
         if(localReady && remoteReady) {
             disconnectButton.visibility = View.GONE
+            counterText.bringToFront()
+            counterText.visibility = View.VISIBLE
+            object : CountDownTimer(5000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if(millisUntilFinished > 2000) {
+                        counterText.text = ""+((millisUntilFinished / 1000)-1)
+                    }
+                    else {
+                        counterText.text = "GO!"
+                    }
+                }
+
+                override fun onFinish() {
+                    counterText.visibility = View.GONE
+                }
+            }.start()
         }
     }
 
