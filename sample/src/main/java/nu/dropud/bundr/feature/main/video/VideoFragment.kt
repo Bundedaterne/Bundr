@@ -2,9 +2,11 @@ package nu.dropud.bundr.feature.main.video
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.IBinder
@@ -65,9 +67,10 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
 
         disconnectButton.setOnClickListener {
-            service?.sendReadyState(true)
-            service?.listenForReadyState(
-                    {isReady -> disconnectButton.visibility = View.GONE})
+            disconnectButton.setImageResource(R.drawable.beerready)
+//            service?.sendReadyState(true)
+//            service?.listenForReadyState(
+//                    {isReady -> disconnectButton.visibility = View.GONE})
             //val rem = remoteUuid
             //getPresenter().disconnectByUser()
         }
