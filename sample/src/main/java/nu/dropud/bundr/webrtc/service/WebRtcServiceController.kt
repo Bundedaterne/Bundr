@@ -70,7 +70,7 @@ class WebRtcServiceController @Inject constructor(
                 .compose(RxUtils.applyFlowableIoSchedulers())
                 .subscribeBy(
                         onNext = {
-                            Timber.d(it.previousChildName)
+                            callback(it.previousChildName.equals("true"))
                         },
                         onError = {
                             handleCriticalException(it)
