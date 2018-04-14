@@ -12,13 +12,13 @@
         android:layout_height="@dimen/local_video_height"
         android:layout_gravity="top|end"
         android:layout_margin="@dimen/margin_medium"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <org.webrtc.SurfaceViewRenderer
         android:id="@+id/remoteVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <ImageButton
         android:id="@+id/switchCameraButton"
@@ -28,15 +28,6 @@
         android:contentDescription="@string/desc_switch_camera"
         android:padding="@dimen/margin_medium"
         app:srcCompat="@drawable/ic_switch_video_white_24dp"/>
-
-    <Button
-        android:id="@+id/connectButton"
-        android:layout_width="@dimen/button_start_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/splash_screen_vertical_margin"
-        android:background="@drawable/rounded_button"
-        android:text="@string/action_start"/>
 
 
     <TextView
@@ -66,7 +57,7 @@
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="@dimen/margin_medium"
         android:gravity="center"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ToggleButton
             android:id="@+id/microphoneEnabledToggle"

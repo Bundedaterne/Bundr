@@ -25,7 +25,6 @@ import org.webrtc.PeerConnection
 import timber.log.Timber
 import android.os.CountDownTimer
 import nu.dropud.bundr.app.InitActivity
-import nu.dropud.bundr.feature.main.MainActivity
 
 
 class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>(), VideoFragmentView, WebRtcServiceListener {
@@ -225,14 +224,17 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     }
 
     override fun showCamViews() {
-        buttonPanel.visibility = View.VISIBLE
+        /** buttonPanel.visibility = View.VISIBLE
         remoteVideoView.visibility = View.VISIBLE
-        localVideoView.visibility = View.VISIBLE
-        connectButton.visibility = View.GONE
+        localVideoView.visibility = View.VISIBLE **/
     }
 
     override fun showStartRouletteView() {
+        /**buttonPanel.visibility = View.GONE
+        remoteVideoView.visibility = View.GONE
+        localVideoView.visibility = View.GONE **/
         startActivity(Intent(activity, InitActivity::class.java))
+
     }
 
     override fun showErrorWhileChoosingRandom() {
@@ -245,20 +247,6 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
 
     override fun showLookingForPartnerMessage() {
         showSnackbarMessage(R.string.msg_looking_for_partner, Snackbar.LENGTH_SHORT)
-    }
-
-    override fun hideConnectButtonWithAnimation() {
-        connectButton.animate().scaleX(0f).scaleY(0f)
-                .setInterpolator(OvershootInterpolator())
-                .setDuration(CONNECT_BUTTON_ANIMATION_DURATION_MS)
-                .withStartAction { connectButton.isClickable = false }
-                .withEndAction {
-                    connectButton.isClickable = true
-                    connectButton.visibility = View.GONE
-                    connectButton.scaleX = 1f
-                    connectButton.scaleY = 1f
-                }
-                .start()
     }
 
     override fun showOtherPartyFinished() {

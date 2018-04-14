@@ -85,7 +85,6 @@ class VideoFragmentPresenter @Inject constructor(
     fun connect() = getView()?.run {
         attachService()
         showLookingForPartnerMessage()
-        hideConnectButtonWithAnimation()
     }
 
     fun disconnectByUser() {
