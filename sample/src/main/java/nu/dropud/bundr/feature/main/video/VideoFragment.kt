@@ -1,10 +1,7 @@
 package nu.dropud.bundr.feature.main.video
 
 import android.Manifest
-import android.content.ActivityNotFoundException
-import android.content.ClipData
-import android.content.ComponentName
-import android.content.ServiceConnection
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.media.AsyncPlayer
@@ -27,8 +24,8 @@ import kotlinx.android.synthetic.main.fragment_video.*
 import org.webrtc.PeerConnection
 import timber.log.Timber
 import android.os.CountDownTimer
-
-
+import nu.dropud.bundr.app.InitActivity
+import nu.dropud.bundr.feature.main.MainActivity
 
 
 class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>(), VideoFragmentView, WebRtcServiceListener {
@@ -235,10 +232,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     }
 
     override fun showStartRouletteView() {
-        buttonPanel.visibility = View.GONE
-        remoteVideoView.visibility = View.GONE
-        localVideoView.visibility = View.GONE
-        connectButton.visibility = View.VISIBLE
+        startActivity(Intent(activity, InitActivity::class.java))
     }
 
     override fun showErrorWhileChoosingRandom() {
