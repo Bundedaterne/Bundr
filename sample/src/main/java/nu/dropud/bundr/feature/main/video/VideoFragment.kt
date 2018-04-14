@@ -3,8 +3,6 @@ package nu.dropud.bundr.feature.main.video
 import android.Manifest
 import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
-import android.media.AsyncPlayer
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -12,7 +10,6 @@ import android.os.IBinder
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.view.View
-import android.view.animation.OvershootInterpolator
 import nu.dropud.bundr.R
 import nu.dropud.bundr.app.App
 import nu.dropud.bundr.common.extension.areAllPermissionsGranted
@@ -34,8 +31,6 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         val instance = VideoFragment()
 
         private const val KEY_IN_CHAT = "key:in_chat"
-        private const val CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE = 1
-        private val NECESSARY_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
         private const val CONNECT_BUTTON_ANIMATION_DURATION_MS = 500L
     }
 
@@ -72,7 +67,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     override fun onResume() {
         super.onResume()
         wasDisconnectedByOtherVar = false
-        checkPermissionsAndConnect()
+        //connect()
     }
 
     override fun onPause() {
@@ -88,7 +83,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         (localVideoView.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
         activity.volumeControlStream = AudioManager.STREAM_VOICE_CALL
 //
-        //checkPermissionsAndConnect()
+        connect()
         val oopsieplayer = MediaPlayer.create(context, R.raw.oopsiewoopsie)
 
         disconnectButton.setOnClickListener {
@@ -177,20 +172,6 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     override fun onDestroy() {
         super.onDestroy()
         if (!activity.isChangingConfigurations) disconnect()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) = when (requestCode) {
-        CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE -> {
-            val grantResult = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
-            if (grantResult) {
-                checkPermissionsAndConnect()
-            } else {
-                showNoPermissionsSnackbar()
-            }
-        }
-        else -> {
-            error("Unknown permission request code $requestCode")
-        }
     }
 
     override fun attachService() {
@@ -294,12 +275,8 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         WebRtcService.bindService(context, serviceConnection)
     }
 
-    fun checkPermissionsAndConnect() {
-        if (context.areAllPermissionsGranted(*NECESSARY_PERMISSIONS)) {
-            getPresenter().connect()
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO), CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE)
-        }
+    fun connect() {
+        getPresenter().connect()
     }
 
     private fun showNoPermissionsSnackbar() {
