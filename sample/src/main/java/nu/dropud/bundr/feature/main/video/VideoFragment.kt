@@ -62,6 +62,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
         else {
             checkPermissionsAndConnect()
+            service?.listenForReadyState()
         }
 
         disconnectButton.setOnClickListener {

@@ -65,7 +65,7 @@ class WebRtcServiceController @Inject constructor(
                 )
     }
 
-    fun listenForReadySatate() {
+    fun listenForReadyState(callback: (Boolean) -> Unit) {
         disposables += firebaseBundr.listenForReadyState(this.remoteUuid!!)
                 .compose(RxUtils.applyFlowableIoSchedulers())
                 .subscribeBy(
