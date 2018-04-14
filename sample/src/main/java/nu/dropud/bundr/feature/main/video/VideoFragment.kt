@@ -2,9 +2,11 @@ package nu.dropud.bundr.feature.main.video
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.IBinder
@@ -25,6 +27,7 @@ import timber.log.Timber
 
 
 class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>(), VideoFragmentView, WebRtcServiceListener {
+
     companion object {
         val TAG: String = VideoFragment::class.java.name
         val instance = VideoFragment()
@@ -70,6 +73,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         else {
             checkPermissionsAndConnect()
         }
+
         disconnectButton.setOnClickListener {
             localReady = !localReady
             service?.sendReadyState(localReady)
