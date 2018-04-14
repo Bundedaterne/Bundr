@@ -24,12 +24,11 @@ import org.webrtc.PeerConnection
 import timber.log.Timber
 
 
-class VideoFragment : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>(), VideoFragmentView, WebRtcServiceListener {
+class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>(), VideoFragmentView, WebRtcServiceListener {
 
     companion object {
         val TAG: String = VideoFragment::class.java.name
-
-        fun newInstance() = VideoFragment()
+        val instance = VideoFragment()
 
         private const val KEY_IN_CHAT = "key:in_chat"
         private const val CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE = 1
@@ -48,6 +47,10 @@ class VideoFragment : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>
     override val remoteUuid
         get() = service?.getRemoteUuid()
 
+    init {
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (buttonPanel.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
@@ -57,12 +60,14 @@ class VideoFragment : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>
         if (savedInstanceState?.getBoolean(KEY_IN_CHAT) == true) {
             initAlreadyRunningConnection()
         }
-        connectButton.setOnClickListener {
+        else {
             checkPermissionsAndConnect()
         }
 
         disconnectButton.setOnClickListener {
-            getPresenter().disconnectByUser()
+            service?.sendReadyState(true)
+            //val rem = remoteUuid
+            //getPresenter().disconnectByUser()
         }
 
         switchCameraButton.setOnClickListener {

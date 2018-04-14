@@ -8,14 +8,11 @@ import co.netguru.videochatguru.WebRtcClient
 import co.netguru.videochatguru.WebRtcOfferingActionListener
 import nu.dropud.bundr.common.extension.ChildEventAdded
 import nu.dropud.bundr.common.util.RxUtils
-import nu.dropud.bundr.data.firebase.FirebaseIceCandidates
-import nu.dropud.bundr.data.firebase.FirebaseIceServers
-import nu.dropud.bundr.data.firebase.FirebaseSignalingAnswers
-import nu.dropud.bundr.data.firebase.FirebaseSignalingOffers
 import nu.dropud.bundr.feature.base.service.BaseServiceController
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
+import nu.dropud.bundr.data.firebase.*
 import org.webrtc.IceCandidate
 import org.webrtc.PeerConnection
 import org.webrtc.SessionDescription
@@ -29,7 +26,8 @@ class WebRtcServiceController @Inject constructor(
         private val firebaseSignalingAnswers: FirebaseSignalingAnswers,
         private val firebaseSignalingOffers: FirebaseSignalingOffers,
         private val firebaseIceCandidates: FirebaseIceCandidates,
-        private val firebaseIceServers: FirebaseIceServers) : BaseServiceController<WebRtcServiceFacade>() {
+        private val firebaseIceServers: FirebaseIceServers,
+        private val firebaseBundr: FirebaseBundr) : BaseServiceController<WebRtcServiceFacade>() {
 
     var serviceListener: WebRtcServiceListener? = null
     var remoteUuid: String? = null
@@ -51,6 +49,19 @@ class WebRtcServiceController @Inject constructor(
         disposables.dispose()
         webRtcClient.detachViews()
         webRtcClient.dispose()
+    }
+
+    fun sendReadyState(isReady : Boolean) {
+        disposables += firebaseBundr.sendReady(this.remoteUuid!!, isReady)
+                .compose(RxUtils.applyCompletableIoSchedulers())
+                .subscribeBy(
+                        onComplete = {
+                            Timber.d("Ready message sent")
+                        },
+                        onError = {
+                            Timber.e(it, "Error while sending message")
+                        }
+                )
     }
 
     fun offerDevice(deviceUuid: String) {

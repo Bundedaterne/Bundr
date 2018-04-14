@@ -61,6 +61,8 @@ class WebRtcService : BaseServiceWithFacade<WebRtcServiceFacade, WebRtcServiceCo
         webRtcServiceController.serviceListener = webRtcServiceListener
     }
 
+    fun sendReadyState(isReady: Boolean) = webRtcServiceController.sendReadyState(isReady)
+
     fun detachServiceActionsListener() {
         webRtcServiceController.serviceListener = null
     }

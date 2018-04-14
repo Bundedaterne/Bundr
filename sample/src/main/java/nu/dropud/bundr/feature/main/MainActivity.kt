@@ -8,7 +8,7 @@ import nu.dropud.bundr.feature.main.video.VideoFragment
 
 class MainActivity : BaseActivity() {
 
-    private val videoFragment = VideoFragment.newInstance()
+    private val videoFragment = VideoFragment.instance
 
     override fun getLayoutId() = R.layout.activity_main
 
