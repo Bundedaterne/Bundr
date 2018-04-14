@@ -11,8 +11,7 @@ import nu.dropud.bundr.feature.main.video.VideoFragment
 class InitActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        VideoFragment.instance.checkPermissionsAndConnect();
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init)
         val button = findViewById<Button>(R.id.chug_button)
         button.setOnClickListener {
