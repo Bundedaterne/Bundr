@@ -20,7 +20,7 @@ class FirebaseBundr @Inject constructor(private val firebaseDatabase: FirebaseDa
 
     private fun connectionBundrPath(localUuid: String, remoteUuid: String): String {
         val uuidSortedArray = arrayOf(localUuid, remoteUuid).sortedArray()
-        return BUNDR_PATH.plus(uuidSortedArray[0] +"@"+ uuidSortedArray[1] + "/")
+        return BUNDR_PATH.plus(uuidSortedArray[0] + "@" + uuidSortedArray[1] + "/")
     }
 
     private fun localBundrPath(localUuid: String, remoteUuid: String): String {
@@ -40,9 +40,12 @@ class FirebaseBundr @Inject constructor(private val firebaseDatabase: FirebaseDa
         it.onComplete()
     }
 
-    fun listenForReadyState(remoteUuid: String): Flowable<ChildEventChanged<String>> {
-        return firebaseDatabase.getReference(remoteBundrPath(App.CURRENT_DEVICE_UUID, remoteUuid))
-                .rxChildEvents()
-                .ofType<ChildEventChanged<String>>()
+    fun listenForReadyState(remoteUuid: String): Flowable<Boolean>? {
+        val remoteBundrPath = remoteBundrPath(App.CURRENT_DEVICE_UUID, remoteUuid)
+        return firebaseDatabase.getReference(remoteBundrPath).rxChildEvents()
+                .filter { it is ChildEventAdded || it is ChildEventRemoved }
+                .map {
+                    it.data.key.equals("readyToChug") && it.data.getValue()!!.equals("true")
+                }
     }
 }

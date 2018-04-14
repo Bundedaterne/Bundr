@@ -62,6 +62,7 @@ class WebRtcService : BaseServiceWithFacade<WebRtcServiceFacade, WebRtcServiceCo
     }
 
     fun sendReadyState(isReady: Boolean) = webRtcServiceController.sendReadyState(isReady)
+
     fun listenForReadyState(callback: (Boolean) -> Unit)
             = webRtcServiceController.listenForReadyState(callback)
 

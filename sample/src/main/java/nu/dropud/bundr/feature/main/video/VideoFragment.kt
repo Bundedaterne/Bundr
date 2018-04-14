@@ -62,13 +62,12 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
         else {
             checkPermissionsAndConnect()
-            service?.listenForReadyState(
-                    {isReady -> disconnectButton.visibility = View.GONE}
-            )
         }
 
         disconnectButton.setOnClickListener {
             service?.sendReadyState(true)
+            service?.listenForReadyState(
+                    {isReady -> disconnectButton.visibility = View.GONE})
             //val rem = remoteUuid
             //getPresenter().disconnectByUser()
         }

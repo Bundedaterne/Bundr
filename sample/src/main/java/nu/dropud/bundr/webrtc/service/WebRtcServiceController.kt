@@ -66,11 +66,11 @@ class WebRtcServiceController @Inject constructor(
     }
 
     fun listenForReadyState(callback: (Boolean) -> Unit) {
-        disposables += firebaseBundr.listenForReadyState(this.remoteUuid!!)
+        disposables += firebaseBundr.listenForReadyState(this.remoteUuid!!)!!
                 .compose(RxUtils.applyFlowableIoSchedulers())
                 .subscribeBy(
                         onNext = {
-                            callback(it.previousChildName.equals("true"))
+                            callback(it)
                         },
                         onError = {
                             handleCriticalException(it)

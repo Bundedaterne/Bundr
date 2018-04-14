@@ -57,7 +57,7 @@
             android:contentDescription="@string/desc_toggle_microphone"
             android:minHeight="@dimen/toggle_button_min_size"
             android:minWidth="@dimen/toggle_button_min_size"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
         <ImageButton
             android:id="@+id/disconnectButton"
