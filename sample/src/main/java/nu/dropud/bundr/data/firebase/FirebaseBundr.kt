@@ -45,7 +45,13 @@ class FirebaseBundr @Inject constructor(private val firebaseDatabase: FirebaseDa
         return firebaseDatabase.getReference(remoteBundrPath).rxChildEvents()
                 .filter { it is ChildEventAdded || it is ChildEventRemoved }
                 .map {
-                    it.data.key.equals("readyToChug") && it.data.getValue()!!.equals("true")
+                    if(it.data.key.equals("readyToChug")) {
+                        val ret : Boolean = it.data.getValue() as Boolean
+                        ret
+                    }
+                    else {
+                        false
+                    }
                 }
     }
 }

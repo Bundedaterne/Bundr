@@ -11,4 +11,6 @@ interface WebRtcServiceListener {
     fun criticalWebRTCServiceException(throwable: Throwable)
 
     fun connectionStateChange(iceConnectionState: PeerConnection.IceConnectionState)
+
+    fun addBindings()
 }

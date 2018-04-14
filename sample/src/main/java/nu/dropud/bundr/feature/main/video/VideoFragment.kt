@@ -25,7 +25,6 @@ import timber.log.Timber
 
 
 class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFragmentPresenter>(), VideoFragmentView, WebRtcServiceListener {
-
     companion object {
         val TAG: String = VideoFragment::class.java.name
         val instance = VideoFragment()
@@ -51,6 +50,9 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
 
     }
 
+    override fun addBindings() {
+        service!!.listenForReadyState({ isReady -> disconnectButton.visibility = View.GONE})
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (buttonPanel.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
@@ -63,11 +65,8 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         else {
             checkPermissionsAndConnect()
         }
-
         disconnectButton.setOnClickListener {
             service?.sendReadyState(true)
-            service?.listenForReadyState(
-                    {isReady -> disconnectButton.visibility = View.GONE})
             //val rem = remoteUuid
             //getPresenter().disconnectByUser()
         }

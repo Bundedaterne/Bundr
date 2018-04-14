@@ -128,6 +128,7 @@ class WebRtcServiceController @Inject constructor(
         webRtcClient.initializePeerConnection(iceServers,
                 peerConnectionListener = object : PeerConnectionListener {
                     override fun onIceConnectionChange(iceConnectionState: PeerConnection.IceConnectionState) {
+                        serviceListener?.addBindings()
                         if (iceConnectionState == PeerConnection.IceConnectionState.DISCONNECTED && isOfferingParty) {
                             webRtcClient.restart()
                         }
