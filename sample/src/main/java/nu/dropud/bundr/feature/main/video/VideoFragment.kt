@@ -45,6 +45,8 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     override fun retrievePresenter() = App.getApplicationComponent(context).videoFragmentComponent().videoFragmentPresenter()
 
     var service: WebRtcService? = null
+    var localReady : Boolean = false;
+    var remoteReady : Boolean = false;
 
     override val remoteUuid
         get() = service?.getRemoteUuid()
@@ -53,6 +55,12 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
 
     }
 
+    override fun addBindings() {
+        service!!.listenForReadyState({ isReady ->
+            remoteReady = isReady
+            checkBothReady()
+        })
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (buttonPanel.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
@@ -65,12 +73,11 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         else {
             checkPermissionsAndConnect()
         }
-
         disconnectButton.setOnClickListener {
+            localReady = !localReady
+            service?.sendReadyState(localReady)
+            checkBothReady()
             disconnectButton.setImageResource(R.drawable.beerready)
-//            service?.sendReadyState(true)
-//            service?.listenForReadyState(
-//                    {isReady -> disconnectButton.visibility = View.GONE})
             //val rem = remoteUuid
             //getPresenter().disconnectByUser()
         }
@@ -85,6 +92,12 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
 
         microphoneEnabledToggle.setOnCheckedChangeListener { _, enabled ->
             service?.enableMicrophone(enabled)
+        }
+    }
+
+    private fun checkBothReady() {
+        if(localReady && remoteReady) {
+            disconnectButton.visibility = View.GONE
         }
     }
 
