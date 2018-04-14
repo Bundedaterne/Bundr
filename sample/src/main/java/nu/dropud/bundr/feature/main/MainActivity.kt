@@ -17,6 +17,15 @@ class MainActivity : BaseActivity() {
         if (savedInstanceState == null) {
             getReplaceFragmentTransaction(R.id.fragmentContainer, videoFragment, VideoFragment.TAG).commit()
         }
-        applicationContext
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        finish()
+    }
+
 }

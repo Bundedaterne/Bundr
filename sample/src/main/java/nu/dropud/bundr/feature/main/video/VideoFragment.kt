@@ -57,6 +57,14 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
 
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    }
+
     override fun addBindings() {
         service!!.listenForReadyState({ isReady ->
             remoteReady = isReady
