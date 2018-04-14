@@ -68,19 +68,18 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
             checkBothReady()
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermissionsAndConnect()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (buttonPanel.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
         (localVideoView.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
         activity.volumeControlStream = AudioManager.STREAM_VOICE_CALL
 //
-        if (savedInstanceState?.getBoolean(KEY_IN_CHAT) == true) {
-            initAlreadyRunningConnection()
-        }
-        else {
-            checkPermissionsAndConnect()
-        }
-
+        checkPermissionsAndConnect()
         val oopsieplayer = MediaPlayer.create(context, R.raw.oopsiewoopsie)
 
         disconnectButton.setOnClickListener {
