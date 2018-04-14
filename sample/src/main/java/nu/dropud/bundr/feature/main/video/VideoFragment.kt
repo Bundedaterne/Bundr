@@ -50,8 +50,10 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     override fun retrievePresenter() = App.getApplicationComponent(context).videoFragmentComponent().videoFragmentPresenter()
 
     var service: WebRtcService? = null
-    var localReady : Boolean = false;
-    var remoteReady : Boolean = false;
+    var localReady : Boolean = false
+    var remoteReady : Boolean = false
+    var counterStarted: Boolean = false
+
 
     override val remoteUuid
         get() = service?.getRemoteUuid()
@@ -112,8 +114,11 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
     }
 
+
     private fun checkBothReady() {
         if(localReady && remoteReady) {
+            if(counterStarted) return
+            counterStarted = true
             disconnectButton.visibility = View.GONE
             counterText.bringToFront()
             counterText.visibility = View.VISIBLE
