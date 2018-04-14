@@ -80,4 +80,5 @@
             android:minWidth="@dimen/toggle_button_min_size"
             android:visibility="invisible"/>
     </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>
