@@ -159,12 +159,12 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
+    /** override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (remoteVideoView.visibility == View.VISIBLE) {
             outState.putBoolean(KEY_IN_CHAT, true)
         }
-    }
+    } **/
 
     override fun onDestroy() {
         super.onDestroy()
