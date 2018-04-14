@@ -288,7 +288,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         WebRtcService.bindService(context, serviceConnection)
     }
 
-    private fun checkPermissionsAndConnect() {
+    fun checkPermissionsAndConnect() {
         if (context.areAllPermissionsGranted(*NECESSARY_PERMISSIONS)) {
             getPresenter().connect()
         } else {

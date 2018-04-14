@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import nu.dropud.bundr.R
 import nu.dropud.bundr.feature.main.MainActivity
+import nu.dropud.bundr.feature.main.video.VideoFragment
 
 class InitActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        VideoFragment.instance.checkPermissionsAndConnect();
         setContentView(R.layout.activity_init)
         val button = findViewById<Button>(R.id.chug_button)
         button.setOnClickListener {
