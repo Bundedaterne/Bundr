@@ -83,6 +83,13 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         if(!wasDisconnectedByOtherVar) {
             getPresenter().disconnectByUser()
         }
+        service?.let {
+            it.detachViews()
+            unbindService()
+        }
+        if (!activity.isChangingConfigurations) {
+            service?.showBackgroundWorkWarning()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -153,21 +160,6 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     override fun onStart() {
         super.onStart()
         service?.hideBackgroundWorkWarning()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (!activity.isChangingConfigurations) {
-            service?.showBackgroundWorkWarning()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        service?.let {
-            it.detachViews()
-            unbindService()
-        }
     }
 
     /** override fun onSaveInstanceState(outState: Bundle) {
