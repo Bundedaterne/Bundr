@@ -7,7 +7,9 @@ import android.content.ComponentName
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.media.AsyncPlayer
 import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.IBinder
 import android.support.design.widget.CoordinatorLayout
@@ -77,15 +79,20 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
             checkPermissionsAndConnect()
         }
 
+        val oopsieplayer = MediaPlayer.create(context, R.raw.oopsiewoopsie)
+
         disconnectButton.setOnClickListener {
-            localReady = !localReady
-            service?.sendReadyState(localReady)
-            checkBothReady()
-            if(localReady) {
-                disconnectButton.setImageResource(R.drawable.beerready)
-            }
-            else {
-                disconnectButton.setImageResource(R.drawable.beernotready)
+            if (service?.sendReadyState(!localReady)!!) {
+                localReady = !localReady
+                checkBothReady()
+                if (localReady) {
+                    disconnectButton.setImageResource(R.drawable.beerready)
+                } else {
+                    disconnectButton.setImageResource(R.drawable.beernotready)
+                }
+            } else {
+                showSnackbarMessage(R.string.too_fast_m8, Snackbar.LENGTH_LONG)
+                oopsieplayer.start()
             }
 
             //val rem = remoteUuid

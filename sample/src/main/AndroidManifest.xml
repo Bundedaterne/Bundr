@@ -13,7 +13,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/lolgo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/lolgo"
+        android:roundIcon="@mipmap/logoroundfin"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
