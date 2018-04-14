@@ -75,6 +75,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
 
         disconnectButton.setOnClickListener {
+            disconnectButton.setImageResource(R.drawable.beerready)
             localReady = !localReady
             service?.sendReadyState(localReady)
             checkBothReady()
