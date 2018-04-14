@@ -50,6 +50,8 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     var oopsiePlayer: MediaPlayer? = null
     var countdownPlayer: MediaPlayer? = null
 
+    var readySnackbar: Snackbar? = null
+
     override fun wasDisconnectedByOther() {
         wasDisconnectedByOtherVar = true
     }
@@ -64,9 +66,25 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         super.onDetach()
     }
 
+    fun dismissReadySnackbar() {
+        readySnackbar?.let {
+            it.dismiss()
+            readySnackbar = null
+        }
+    }
+
     override fun addBindings() {
         service!!.listenForReadyState({ isReady ->
             remoteReady = isReady
+
+            if (remoteReady) {
+                if (readySnackbar == null) {
+                    readySnackbar = showSnackbarMessage(R.string.your_partner_is_ready, Snackbar.LENGTH_INDEFINITE)
+                }
+            } else {
+                dismissReadySnackbar()
+            }
+
             checkBothReady()
         })
     }
@@ -137,6 +155,8 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     private fun checkBothReady() {
         if(localReady && remoteReady) {
             if(counterStarted) return
+
+            dismissReadySnackbar()
 
             val countdownInterval : Long = 1000
             val totalTime = 5 * countdownInterval

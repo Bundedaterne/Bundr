@@ -43,7 +43,7 @@ class FirebaseBundr @Inject constructor(private val firebaseDatabase: FirebaseDa
     fun listenForReadyState(remoteUuid: String): Flowable<Boolean>? {
         val remoteBundrPath = remoteBundrPath(App.CURRENT_DEVICE_UUID, remoteUuid)
         return firebaseDatabase.getReference(remoteBundrPath).rxChildEvents()
-                .filter { it is ChildEventAdded || it is ChildEventRemoved }
+                .filter { it is ChildEventAdded || it is ChildEventChanged }
                 .map {
                     if(it.data.key.equals("readyToChug")) {
                         val ret : Boolean = it.data.getValue() as Boolean

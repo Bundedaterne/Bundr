@@ -20,12 +20,14 @@ abstract class BaseFragment : Fragment() {
     @LayoutRes
     abstract fun getLayoutId(): Int
 
-    fun showSnackbarMessage(@StringRes resId: Int, @BaseTransientBottomBar.Duration duration: Int) {
+    fun showSnackbarMessage(@StringRes resId: Int, @BaseTransientBottomBar.Duration duration: Int): Snackbar? {
+        var snackbar: Snackbar? = null
         view?.let {
-            val snackbar = Snackbar.make(it, resId, duration)
-            val layout = snackbar.view as Snackbar.SnackbarLayout
+            snackbar = Snackbar.make(it, resId, duration)
+            val layout = snackbar?.view as Snackbar.SnackbarLayout
             layout.setBackgroundColor(context.getColorCompat(R.color.transparent_black))
-            snackbar.show()
+            snackbar?.show()
         }
+        return snackbar
     }
 }
