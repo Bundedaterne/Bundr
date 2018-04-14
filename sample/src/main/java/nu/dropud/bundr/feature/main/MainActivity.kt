@@ -18,9 +18,4 @@ class MainActivity : BaseActivity() {
             getReplaceFragmentTransaction(R.id.fragmentContainer, videoFragment, VideoFragment.TAG).commit()
         }
     }
-
-    override fun onPause() {
-        super.onPause()
-        videoFragment.getPresenter().disconnectByUser()
-    }
 }

@@ -51,8 +51,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     var counterStarted: Boolean = false
 
 
-    override val remoteUuid
-        get() = service?.getRemoteUuid()
+    override val remoteUuid get() = service?.getRemoteUuid()
 
     init {
 
@@ -69,6 +68,12 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         super.onResume()
         checkPermissionsAndConnect()
     }
+
+    override fun onPause() {
+        super.onPause()
+        getPresenter().disconnectByUser()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (buttonPanel.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
