@@ -26,4 +26,6 @@
     <string name="ongoing_call_notification_text">Video chat call is still running in the background</string>
     <string name="people_waiting_text">\? people waiting to chug</string>
     <string name="chug_button_text">I\'m ready to chug!</string>
+
+    <string name="too_fast_m8">Wait a minute, you don\'t want to chug alone, do you?</string>
 </resources>

@@ -86,6 +86,8 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
                 } else {
                     disconnectButton.setImageResource(R.drawable.beernotready)
                 }
+            } else {
+                showSnackbarMessage(R.string.too_fast_m8, Snackbar.LENGTH_LONG)
             }
 
             //val rem = remoteUuid
