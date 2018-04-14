@@ -21,6 +21,6 @@ class MainActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        videoFragment.disconnect()
+        videoFragment.getPresenter().disconnectByUser()
     }
 }
