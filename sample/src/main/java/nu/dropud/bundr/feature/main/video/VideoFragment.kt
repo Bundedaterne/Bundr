@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_video.*
 import org.webrtc.PeerConnection
 import timber.log.Timber
 import android.os.CountDownTimer
+import android.provider.MediaStore
 import nu.dropud.bundr.app.InitActivity
 
 
@@ -46,16 +47,14 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     var counterStarted: Boolean = false
     var wasDisconnectedByOtherVar : Boolean = false
 
+    var oopsiePlayer: MediaPlayer? = null
+    var countdownPlayer: MediaPlayer? = null
+
     override fun wasDisconnectedByOther() {
         wasDisconnectedByOtherVar = true
     }
 
-
     override val remoteUuid get() = service?.getRemoteUuid()
-
-    init {
-
-    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -97,9 +96,11 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         (buttonPanel.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
         (localVideoView.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
         activity.volumeControlStream = AudioManager.STREAM_VOICE_CALL
-//
+
+        oopsiePlayer = MediaPlayer.create(context, R.raw.oopsiewoopsie)
+        countdownPlayer = MediaPlayer.create(context, R.raw.countdown)
+
         connect()
-        val oopsieplayer = MediaPlayer.create(context, R.raw.oopsiewoopsie)
 
         disconnectButton.setOnClickListener {
             if (service?.sendReadyState(!localReady)!!) {
@@ -112,7 +113,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
                 }
             } else {
                 showSnackbarMessage(R.string.too_fast_m8, Snackbar.LENGTH_LONG)
-                oopsieplayer.start()
+                oopsiePlayer?.start()
             }
 
             //val rem = remoteUuid
@@ -132,18 +133,24 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
     }
 
-
     private fun checkBothReady() {
         if(localReady && remoteReady) {
             if(counterStarted) return
+
+            val countdownInterval : Long = 1000
+            val totalTime = 5 * countdownInterval
+
+            countdownPlayer?.start()
+
             counterStarted = true
             disconnectButton.visibility = View.GONE
             counterText.bringToFront()
             counterText.visibility = View.VISIBLE
-            object : CountDownTimer(5000, 1000) {
+
+            object : CountDownTimer(totalTime, countdownInterval) {
                 override fun onTick(millisUntilFinished: Long) {
-                    if(millisUntilFinished > 2000) {
-                        counterText.text = ""+((millisUntilFinished / 1000)-1)
+                    if(millisUntilFinished > 2 * countdownInterval) {
+                        counterText.text = ""+((millisUntilFinished / countdownInterval)-1)
                     }
                     else {
                         counterText.text = "GO!"
