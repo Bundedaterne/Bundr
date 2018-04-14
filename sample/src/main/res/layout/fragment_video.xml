@@ -38,14 +38,6 @@
         android:background="@drawable/rounded_button"
         android:text="@string/action_start"/>
 
-    <Button
-        android:id="@+id/switchContext"
-        android:layout_width="@dimen/button_start_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/splash_screen_vertical_margin"
-        android:background="@drawable/rounded_button"
-        android:text="back"/>
 
     <LinearLayout
         android:id="@+id/buttonPanel"
