@@ -79,7 +79,7 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         (localVideoView.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
         activity.volumeControlStream = AudioManager.STREAM_VOICE_CALL
 //
-        checkPermissionsAndConnect()
+        //checkPermissionsAndConnect()
         val oopsieplayer = MediaPlayer.create(context, R.raw.oopsiewoopsie)
 
         disconnectButton.setOnClickListener {
