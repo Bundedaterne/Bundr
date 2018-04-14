@@ -71,8 +71,9 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
             checkPermissionsAndConnect()
         }
         disconnectButton.setOnClickListener {
-            service?.sendReadyState(true)
-            checkBothReady();
+            localReady = !localReady
+            service?.sendReadyState(localReady)
+            checkBothReady()
             //val rem = remoteUuid
             //getPresenter().disconnectByUser()
         }
