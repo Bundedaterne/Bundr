@@ -12,6 +12,7 @@ import nu.dropud.bundr.feature.base.service.BaseServiceController
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
+import nu.dropud.bundr.common.extension.ChildEventChanged
 import nu.dropud.bundr.data.firebase.*
 import org.webrtc.IceCandidate
 import org.webrtc.PeerConnection
@@ -51,7 +52,7 @@ class WebRtcServiceController @Inject constructor(
         webRtcClient.dispose()
     }
 
-    fun sendReadyState(isReady : Boolean) {
+    fun sendReadyState(isReady: Boolean) {
         disposables += firebaseBundr.sendReady(this.remoteUuid!!, isReady)
                 .compose(RxUtils.applyCompletableIoSchedulers())
                 .subscribeBy(
@@ -60,6 +61,19 @@ class WebRtcServiceController @Inject constructor(
                         },
                         onError = {
                             Timber.e(it, "Error while sending message")
+                        }
+                )
+    }
+
+    fun listenForReadySatate() {
+        disposables += firebaseBundr.listenForReadyState(this.remoteUuid!!)
+                .compose(RxUtils.applyFlowableIoSchedulers())
+                .subscribeBy(
+                        onNext = {
+                            Timber.d(it.previousChildName)
+                        },
+                        onError = {
+                            handleCriticalException(it)
                         }
                 )
     }
@@ -202,7 +216,8 @@ class WebRtcServiceController @Inject constructor(
 
     private fun sendOffer(localDescription: SessionDescription) {
         disposables += firebaseSignalingOffers.create(
-                recipientUuid = remoteUuid ?: throw IllegalArgumentException("Remote uuid should be set first"),
+                recipientUuid = remoteUuid
+                        ?: throw IllegalArgumentException("Remote uuid should be set first"),
                 localSessionDescription = localDescription
         )
                 .compose(RxUtils.applyCompletableIoSchedulers())
@@ -233,7 +248,8 @@ class WebRtcServiceController @Inject constructor(
 
     private fun sendAnswer(localDescription: SessionDescription) {
         disposables += firebaseSignalingAnswers.create(
-                recipientUuid = remoteUuid ?: throw IllegalArgumentException("Remote uuid should be set first"),
+                recipientUuid = remoteUuid
+                        ?: throw IllegalArgumentException("Remote uuid should be set first"),
                 localSessionDescription = localDescription
         )
                 .compose(RxUtils.applyCompletableIoSchedulers())

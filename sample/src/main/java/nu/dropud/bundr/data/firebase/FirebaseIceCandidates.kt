@@ -74,5 +74,4 @@ class FirebaseIceCandidates @Inject constructor(private val firebaseDatabase: Fi
                     }
                 }
     }
-
 }
