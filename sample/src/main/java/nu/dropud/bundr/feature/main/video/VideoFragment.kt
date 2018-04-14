@@ -49,6 +49,11 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     var localReady : Boolean = false
     var remoteReady : Boolean = false
     var counterStarted: Boolean = false
+    var wasDisconnectedByOtherVar : Boolean = false
+
+    override fun wasDisconnectedByOther() {
+        wasDisconnectedByOtherVar = true
+    }
 
 
     override val remoteUuid get() = service?.getRemoteUuid()
@@ -66,12 +71,15 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
 
     override fun onResume() {
         super.onResume()
+        wasDisconnectedByOtherVar = false
         checkPermissionsAndConnect()
     }
 
     override fun onPause() {
         super.onPause()
-        getPresenter().disconnectByUser()
+        if(!wasDisconnectedByOtherVar) {
+            getPresenter().disconnectByUser()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -61,6 +61,7 @@ class VideoFragmentPresenter @Inject constructor(
                         onNext = {
                             Timber.d("Disconnect order")
                             getView()?.showOtherPartyFinished()
+                            getView()?.wasDisconnectedByOther()
                             disconnect()
                         }
                 )
