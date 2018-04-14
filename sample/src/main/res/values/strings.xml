@@ -24,4 +24,6 @@
     <string name="background_work_notification_channel_description">Warns about app working in the background</string>
     <string name="ongoing_call_notification_title">Bundr is running</string>
     <string name="ongoing_call_notification_text">Video chat call is still running in the background</string>
+    <string name="people_waiting_text">\? people waiting to chug</string>
+    <string name="chug_button_text">I\'m ready to chug!</string>
 </resources>
