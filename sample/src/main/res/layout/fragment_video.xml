@@ -56,7 +56,8 @@
             android:button="@drawable/ic_microphone_toggle"
             android:contentDescription="@string/desc_toggle_microphone"
             android:minHeight="@dimen/toggle_button_min_size"
-            android:minWidth="@dimen/toggle_button_min_size"/>
+            android:minWidth="@dimen/toggle_button_min_size"
+            android:visibility="invisible"/>
 
         <ImageButton
             android:id="@+id/disconnectButton"
@@ -76,6 +77,7 @@
             android:button="@drawable/ic_videocam_on_off_toggle"
             android:contentDescription="@string/desc_toggle_camera"
             android:minHeight="@dimen/toggle_button_min_size"
-            android:minWidth="@dimen/toggle_button_min_size"/>
+            android:minWidth="@dimen/toggle_button_min_size"
+            android:visibility="invisible"/>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
