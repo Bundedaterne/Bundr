@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_init.*
 import nu.dropud.bundr.R
 import nu.dropud.bundr.common.extension.ChildEventAdded
@@ -34,6 +35,9 @@ class InitActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init)
+
+        FirebaseMessaging.getInstance().subscribeToTopic("hot_singles_in_your_area")
+
         val button = findViewById<Button>(R.id.chug_button)
         button.setOnClickListener {
             startActivity(Intent(this@InitActivity, MainActivity::class.java))

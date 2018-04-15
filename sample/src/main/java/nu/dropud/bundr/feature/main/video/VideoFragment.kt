@@ -5,6 +5,7 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.IBinder
 import android.support.design.widget.CoordinatorLayout
@@ -22,6 +23,11 @@ import org.webrtc.PeerConnection
 import timber.log.Timber
 import android.os.CountDownTimer
 import android.provider.MediaStore
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import nu.dropud.bundr.app.InitActivity
 
 
@@ -109,6 +115,42 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
         }
     }
 
+    fun pushNotification() {
+        val SERVER_KEY = "AAAAzPMglzY:APA91bEJDqMpPhVGNDXns32f0_2ovemzaVPl58estrPD_ohk4rAASGm3QYeszRQOKHssRIxxu3Rgg-Vverf6P6Rmu44tIHnG0zWWWVFaGbCZOxfPl2fL4mmu-JhGNn1ldE2pRhtSMVVe"
+        val URL = "https://fcm.googleapis.com/fcm/send"
+
+        object: AsyncTask<Unit, Unit, Unit>() {
+            override fun doInBackground(vararg params: Unit?): Unit {
+                khttp.post(URL,
+                        headers = mapOf("Authorization" to "key=${SERVER_KEY}"),
+                        json = mapOf(
+                                "to" to "/topics/hot_singles_in_your_area",
+                                "data" to mapOf(
+                                        "message" to "Memes"
+                                ),
+                                "notification" to mapOf(
+                                        "title" to "Foo",
+                                        "body" to "Bar",
+                                        "sound" to "default",
+                                        "click_action" to "FCM_PLUGIN_ACTIVITY",
+                                        "icon" to "fcm_push_icon"
+                                )
+                        ))
+            }
+        }.execute()
+
+
+        /*
+        curl -v -X POST -H "Authorization: key=" -H "Content-Type: application/json" -d '{
+                                                        "to": "/topics/hot_singles_in_your_area",
+                                                        "data": {"message": "Memes"},
+                                                      "notification":{ "title":"Notification title", "body":"Notification body", "sound":"default", "click_action":"FCM_PLUGIN_ACTIVITY", "icon":"fcm_push_icon" }
+                                                      }' "https://fcm.googleapis.com/fcm/send"
+         */
+
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (buttonPanel.layoutParams as CoordinatorLayout.LayoutParams).behavior = MoveUpBehavior()
@@ -117,6 +159,17 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
 
         oopsiePlayer = MediaPlayer.create(context, R.raw.oopsiewoopsie)
         countdownPlayer = MediaPlayer.create(context, R.raw.countdown)
+
+        FirebaseDatabase.getInstance().getReference("online_devices/").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot?) {
+                if (dataSnapshot?.childrenCount == 0L) {
+                    pushNotification()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError?) {
+            }
+        })
 
         connect()
 
