@@ -57,7 +57,7 @@ class InitActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val childrenCount = dataSnapshot.childrenCount
                 if (childrenCount == 1L) {
-                    textView.text = "" + dataSnapshot.childrenCount + " chugger are waiting in your area"
+                    textView.text = "" + dataSnapshot.childrenCount + " chugger is waiting in your area"
                 } else {
                     textView.text = "" +  dataSnapshot.childrenCount + " chuggers are waiting in your area"
                 }
