@@ -8,7 +8,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.CountDownTimer
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import kotlinx.android.synthetic.main.activity_splash_screen.*
 import kotlinx.android.synthetic.main.fragment_video.*
+import nu.dropud.bundr.R
 import nu.dropud.bundr.feature.main.MainActivity
 
 
@@ -19,16 +23,15 @@ class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Perhaps set content view here
-
-        prefs = getSharedPreferences("com.mycompany.myAppName", Context.MODE_PRIVATE)
+        setContentView(R.layout.activity_splash_screen)
+        prefs = getSharedPreferences("bundr.dropud.nu", Context.MODE_PRIVATE)
     }
 
     override fun onResume() {
         super.onResume()
-        if (prefs!!.getBoolean("firstrun", false)) {
-            startActivity(Intent(this@SplashScreen, InitActivity::class.java))
-        } else {
-            object : CountDownTimer(3000, 1000) {
+        if (prefs!!.getBoolean("firstrun", true)) {
+            prefs!!.edit().putBoolean("firstrun", false).commit();
+            object : CountDownTimer(6000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
 
@@ -36,6 +39,43 @@ class SplashScreen : AppCompatActivity() {
                     startActivity(Intent(this@SplashScreen, InitActivity::class.java))
                 }
             }.start()
+            val fadeInAnimation1 = AlphaAnimation(0.0f,1f)
+            val fadeInAnimation2 = AlphaAnimation(0.0f,1f)
+            val fadeInAnimation3 = AlphaAnimation(0.0f,1f)
+            fadeInAnimation1.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationEnd(animation: Animation?) {
+                    text2.text = "ˈtʃʌɡɪŋ"
+                    text2.startAnimation(fadeInAnimation2)
+                }
+
+                override fun onAnimationStart(animation: Animation?) {
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {
+                }
+
+            })
+            fadeInAnimation2.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationEnd(animation: Animation?) {
+                    text3.text = "To drink alcohol really fast without breathing. \n People usually chant this at the person who is drinking. "
+                    text3.startAnimation(fadeInAnimation3)
+                }
+
+                override fun onAnimationStart(animation: Animation?) {
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {
+                }
+
+            })
+            fadeInAnimation1.duration = 1500;
+            fadeInAnimation2.duration = 1500;
+            fadeInAnimation3.duration = 2000;
+            text1.text = "Chugging"
+            text1.startAnimation(fadeInAnimation1)
+
+        } else {
+            startActivity(Intent(this@SplashScreen, InitActivity::class.java))
         }
     }
 }

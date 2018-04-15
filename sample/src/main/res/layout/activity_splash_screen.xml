@@ -7,16 +7,38 @@
     tools:context="nu.dropud.bundr.app.SplashScreen">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="243dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="300dp"
-        android:layout_marginLeft="353dp"
-        android:layout_marginRight="300dp"
-        android:layout_marginStart="353dp"
-        android:text="TextView"
-        android:textSize="30sp"
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_marginTop="120dp"
+        android:text=""
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_marginTop="160dp"
+        android:text=""
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="354dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="216dp"
+        android:text=""
+        android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="276dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
