@@ -6,6 +6,7 @@ import android.R.id.edit
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -29,7 +30,9 @@ class SplashScreen : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (prefs!!.getBoolean("firstrun", true)) {
+        if (true){//prefs!!.getBoolean("firstrun", true)) {
+            val startPlayer = MediaPlayer.create(applicationContext, R.raw.start)
+            startPlayer.start()
             prefs!!.edit().putBoolean("firstrun", false).commit();
             object : CountDownTimer(6000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
@@ -39,10 +42,10 @@ class SplashScreen : AppCompatActivity() {
                     startActivity(Intent(this@SplashScreen, InitActivity::class.java))
                 }
             }.start()
-            val fadeInAnimation1 = AlphaAnimation(0.0f,1f)
-            val fadeInAnimation2 = AlphaAnimation(0.0f,1f)
-            val fadeInAnimation3 = AlphaAnimation(0.0f,1f)
-            fadeInAnimation1.setAnimationListener(object : Animation.AnimationListener{
+            val fadeInAnimation1 = AlphaAnimation(0.0f, 1f)
+            val fadeInAnimation2 = AlphaAnimation(0.0f, 1f)
+            val fadeInAnimation3 = AlphaAnimation(0.0f, 1f)
+            fadeInAnimation1.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationEnd(animation: Animation?) {
                     text2.text = "ˈtʃʌɡɪŋ"
                     text2.startAnimation(fadeInAnimation2)
@@ -55,7 +58,7 @@ class SplashScreen : AppCompatActivity() {
                 }
 
             })
-            fadeInAnimation2.setAnimationListener(object : Animation.AnimationListener{
+            fadeInAnimation2.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationEnd(animation: Animation?) {
                     text3.text = "To drink alcohol really fast without breathing. \n People usually chant this at the person who is drinking. "
                     text3.startAnimation(fadeInAnimation3)
