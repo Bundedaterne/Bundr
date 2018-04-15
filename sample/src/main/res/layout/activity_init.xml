@@ -4,26 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#68C3A3"
     tools:context="nu.dropud.bundr.app.InitActivity">
+
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/waitingText"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="46sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticText"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
+        android:gravity="center"
         android:text="@string/people_waiting_text"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/chug_button"
+        android:layout_width="214dp"
+        android:layout_height="109dp"
+        android:layout_marginBottom="104dp"
         android:layout_marginTop="100dp"
-        android:layout_height="300dp"
-        android:layout_width="match_parent"
+        android:background="#3FC380"
         android:text="@string/chug_button_text"
         android:textSize="24sp"
-        android:background="#337733"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.703" />
 </android.support.constraint.ConstraintLayout>
