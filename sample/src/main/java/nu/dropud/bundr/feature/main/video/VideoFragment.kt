@@ -116,10 +116,10 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
     }
 
     fun pushNotification() {
-        val SERVER_KEY = "AAAAzPMglzY:APA91bEJDqMpPhVGNDXns32f0_2ovemzaVPl58estrPD_ohk4rAASGm3QYeszRQOKHssRIxxu3Rgg-Vverf6P6Rmu44tIHnG0zWWWVFaGbCZOxfPl2fL4mmu-JhGNn1ldE2pRhtSMVVe"
-        val URL = "https://fcm.googleapis.com/fcm/send"
-
         object: AsyncTask<Unit, Unit, Unit>() {
+            val SERVER_KEY = "AAAAzPMglzY:APA91bEJDqMpPhVGNDXns32f0_2ovemzaVPl58estrPD_ohk4rAASGm3QYeszRQOKHssRIxxu3Rgg-Vverf6P6Rmu44tIHnG0zWWWVFaGbCZOxfPl2fL4mmu-JhGNn1ldE2pRhtSMVVe"
+            val URL = "https://fcm.googleapis.com/fcm/send"
+
             override fun doInBackground(vararg params: Unit?): Unit {
                 khttp.post(URL,
                         headers = mapOf("Authorization" to "key=${SERVER_KEY}"),
@@ -129,26 +129,15 @@ class VideoFragment constructor() : BaseMvpFragment<VideoFragmentView, VideoFrag
                                         "message" to "Memes"
                                 ),
                                 "notification" to mapOf(
-                                        "title" to "Foo",
-                                        "body" to "Bar",
+                                        "title" to "Chug partner needed",
+                                        "body" to "Someone is waiting for you ;^)",
                                         "sound" to "default",
-                                        "click_action" to "FCM_PLUGIN_ACTIVITY",
+                                        "click_action" to "NOTIFICATION_ACTIVITY",
                                         "icon" to "fcm_push_icon"
                                 )
                         ))
             }
         }.execute()
-
-
-        /*
-        curl -v -X POST -H "Authorization: key=" -H "Content-Type: application/json" -d '{
-                                                        "to": "/topics/hot_singles_in_your_area",
-                                                        "data": {"message": "Memes"},
-                                                      "notification":{ "title":"Notification title", "body":"Notification body", "sound":"default", "click_action":"FCM_PLUGIN_ACTIVITY", "icon":"fcm_push_icon" }
-                                                      }' "https://fcm.googleapis.com/fcm/send"
-         */
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
