@@ -79,3 +79,4 @@
 
 #GMS
 -dontnote com.google.android.gms.**
+-dontwarn com.google.android.gms.**
