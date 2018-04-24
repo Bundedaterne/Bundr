@@ -30,7 +30,7 @@ class SplashScreen : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (true){//prefs!!.getBoolean("firstrun", true)) {
+        if (prefs!!.getBoolean("firstrun", true)) {
             val startPlayer = MediaPlayer.create(applicationContext, R.raw.start)
             startPlayer.start()
             prefs!!.edit().putBoolean("firstrun", false).commit();
